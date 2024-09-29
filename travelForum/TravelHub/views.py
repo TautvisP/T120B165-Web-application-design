@@ -24,6 +24,13 @@ class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
 
+    @action(detail=True, methods=['get'])
+    def comments(self, request, pk=None):
+        post = self.get_object()
+        comments = post.comments.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
