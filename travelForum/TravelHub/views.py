@@ -20,6 +20,18 @@ class CountryViewSet(viewsets.ModelViewSet):
         serializer = PostSerializer(posts, many=True)
         return Response(serializer.data)
 
+    # Nested action to list comments for a specific post of a country
+    @action(detail=True, methods=['get'], url_path='posts/(?P<post_pk>[^/.]+)/comments')
+    def post_comments(self, request, pk=None, post_pk=None):
+        country = self.get_object()
+        try:
+            post = country.posts.get(pk=post_pk)
+        except Post.DoesNotExist:
+            return Response({"error": "Post not found"}, status=404)
+        comments = post.comments.all()
+        serializer = CommentSerializer(comments, many=True)
+        return Response(serializer.data)
+
 class PostViewSet(viewsets.ModelViewSet):
     queryset = Post.objects.all()
     serializer_class = PostSerializer
