@@ -57,3 +57,9 @@
 
 •	HTML5/CSS3 ir Bootstrap naudojami formuojant prisitaikančią ir patogią grafinę naudotojo sąsają. Šios technologijos leidžia sukurti modernią, patrauklią ir mobiliesiems pritaikytą sąsają, užtikrinančią gerą vartotojų patirtį.
 
+## Paleidimas
+Windows:
+python venv\Scripts\Activate.ps1 
+Unix: python venv\Scripts\activate
+
+python manage.py runserver
