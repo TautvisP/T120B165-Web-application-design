@@ -1,7 +1,7 @@
 from django.urls import path, include
-from . import views
+from .views import CountryViewSet, PostViewSet, CommentViewSet, CustomTokenObtainPairView, RegisterView
+from rest_framework_simplejwt.views import TokenRefreshView
 from rest_framework.routers import DefaultRouter
-from .views import CountryViewSet, PostViewSet, CommentViewSet
 
 router = DefaultRouter()
 router.register(r'countries', CountryViewSet)
@@ -10,4 +10,8 @@ router.register(r'comments', CommentViewSet)
 
 urlpatterns = [
     path('', include(router.urls)),
+    path('token/', CustomTokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+
+    path('register/', RegisterView.as_view(), name='register'),
 ]

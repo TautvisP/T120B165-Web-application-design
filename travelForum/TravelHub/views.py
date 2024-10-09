@@ -5,6 +5,12 @@ from .models import Country, Post, Comment
 from .serializers import CountrySerializer, PostSerializer, CommentSerializer
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from .serializers import CustomTokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
+from django.contrib.auth.models import User
+from rest_framework import status
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 def home(request):
     return HttpResponse("Sveiki atvykę į mano Django svetainę!")
@@ -46,3 +52,47 @@ class PostViewSet(viewsets.ModelViewSet):
 class CommentViewSet(viewsets.ModelViewSet):
     queryset = Comment.objects.all()
     serializer_class = CommentSerializer
+
+
+class CustomTokenObtainPairView(TokenObtainPairView):
+    serializer_class = CustomTokenObtainPairSerializer
+
+    def post(self, request, *args, **kwargs):
+        # Call the original post method to get the response
+        response = super().post(request, *args, **kwargs)
+
+        # Here we need to add the role from the token, since the response is not directly
+        # providing the role information unless we modify the serializer to return it
+        token = response.data['access']
+        payload = self.get_payload_from_token(token)  # You'll create this method
+
+        # Add a success message to the response data
+        response.data['message'] = 'Login successful! Welcome back, {}!'.format(payload['username'])
+        response.data['role'] = payload['role']  # Add role to the response
+
+        return response
+
+    def get_payload_from_token(self, token):
+        """
+        This helper method will decode the token to get the payload data.
+        """
+        from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+        from rest_framework_simplejwt.tokens import UntypedToken
+
+        try:
+            untyped_token = UntypedToken(token)
+            return untyped_token.payload  # returns the token payload
+        except Exception as e:
+            return {}
+
+
+class RegisterView(APIView):
+    def post(self, request):
+        username = request.data.get('username')
+        password = request.data.get('password')
+        if username and password:
+            user = User(username=username)
+            user.set_password(password)
+            user.save()
+            return Response({'msg': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        return Response({'msg': 'Invalid input'}, status=status.HTTP_400_BAD_REQUEST)
