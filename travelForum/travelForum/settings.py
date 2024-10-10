@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'django-insecure-yh9-n^$m%!sd#kh+f#y=cl3-%@e_2b0alq$i0h2q4#cun-utqh'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['TravelHub.azurewebsites.net', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = []
 
 
 
@@ -44,19 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     'rest_framework_simplejwt',
-    'storages',
 ]
 
-# Azure Storage configuration for static and media files
-DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
-STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStaticStorage'
-
-AZURE_ACCOUNT_NAME = 'travelhubstorage'  # Your Azure Storage account name
-AZURE_ACCOUNT_KEY = os.getenv('AZURE_ACCOUNT_KEY')
-AZURE_CONTAINER = 'static'  # Your container name
-
-# Optional: Set the Azure storage URL
-AZURE_CUSTOM_DOMAIN = f'{AZURE_ACCOUNT_NAME}.blob.core.windows.net'
 
 REST_FRAMEWORK = {
         'DEFAULT_AUTHENTICATION_CLASSES': (
