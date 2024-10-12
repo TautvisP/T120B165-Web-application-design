@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.decorators import api_view
 
 def home(request):
     return HttpResponse("Sveiki atvykę į mano Django svetainę!")
@@ -96,3 +97,7 @@ class RegisterView(APIView):
             user.save()
             return Response({'msg': 'User registered successfully'}, status=status.HTTP_201_CREATED)
         return Response({'msg': 'Invalid input'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    def get(self, request):
+        return Response({'msg': 'Register via POST request'}, status=status.HTTP_200_OK)
+    

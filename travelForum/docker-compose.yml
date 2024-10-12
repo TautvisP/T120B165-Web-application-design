@@ -1,0 +1,37 @@
+version: '3.8'
+services:
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend  # Separate Dockerfile for the frontend
+    ports:
+      - "3000:3000"  # Map port 3000 for React frontend
+    environment:
+      - CHOKIDAR_USEPOLLING=true  # Useful for live reloading in Docker
+    working_dir: /app/travel-frontend
+    command: ["npm", "start"]  # Starts the React development server
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.backend  # Separate Dockerfile for the backend
+    ports:
+      - "8000:8000"  # Map port 8000 for Django backend
+    volumes:
+      - .:/app
+    depends_on:
+      - db  # Add dependency on the db (MySQL) service
+    environment:
+      - DB_HOST=travelforum-db-1  # Set the DB host to the MySQL service name
+
+  db:
+    image: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: traveler
+      MYSQL_DATABASE: travelhub_database
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  db_data:
