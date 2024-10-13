@@ -1,9 +1,8 @@
-version: '3.8'
 services:
   frontend:
     build:
-      context: .
-      dockerfile: Dockerfile.frontend  # Separate Dockerfile for the frontend
+      context: ./travel-frontend  # Specify the context directory for the frontend
+    image: tautvis520/frontend:latest
     ports:
       - "3000:3000"  # Map port 3000 for React frontend
     environment:
@@ -13,8 +12,8 @@ services:
 
   backend:
     build:
-      context: .
-      dockerfile: Dockerfile.backend  # Separate Dockerfile for the backend
+      context: ./travel-backend  # Specify the context directory for the backend
+    image: tautvis520/backend:latest
     ports:
       - "8000:8000"  # Map port 8000 for Django backend
     volumes:
@@ -22,7 +21,10 @@ services:
     depends_on:
       - db  # Add dependency on the db (MySQL) service
     environment:
-      - DB_HOST=travelforum-db-1  # Set the DB host to the MySQL service name
+      - DB_HOST=db  # Use the correct service name for MySQL
+      - DB_NAME=travelhub_database
+      - DB_USER=traveler
+      - DB_PASSWORD=traveler
 
   db:
     image: mysql
@@ -30,6 +32,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: traveler
       MYSQL_DATABASE: travelhub_database
+      MYSQL_USER: traveler
+      MYSQL_PASSWORD: traveler
     volumes:
       - db_data:/var/lib/mysql
 
