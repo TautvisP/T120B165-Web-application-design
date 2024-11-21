@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from rest_framework import viewsets
 from .models import Country, Post, Comment
-from .serializers import CountrySerializer, PostSerializer, CommentSerializer
+from .serializers import *
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from .serializers import CustomTokenObtainPairSerializer
@@ -11,6 +11,8 @@ from django.contrib.auth.models import User
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
+from rest_framework_simplejwt.tokens import UntypedToken
 
 def home(request):
     return HttpResponse("Sveiki atvykę į mano Django svetainę!")
@@ -58,15 +60,11 @@ class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
-        # Call the original post method to get the response
         response = super().post(request, *args, **kwargs)
-
-        # Here we need to add the role from the token, since the response is not directly
-        # providing the role information unless we modify the serializer to return it
+        
         token = response.data['access']
-        payload = self.get_payload_from_token(token)  # You'll create this method
+        payload = self.get_payload_from_token(token)
 
-        # Add a success message to the response data
         response.data['message'] = 'Login successful! Welcome back, {}!'.format(payload['username'])
         response.data['role'] = payload['role']  # Add role to the response
 
@@ -76,12 +74,9 @@ class CustomTokenObtainPairView(TokenObtainPairView):
         """
         This helper method will decode the token to get the payload data.
         """
-        from rest_framework_simplejwt.token_blacklist.models import OutstandingToken
-        from rest_framework_simplejwt.tokens import UntypedToken
-
         try:
             untyped_token = UntypedToken(token)
-            return untyped_token.payload  # returns the token payload
+            return untyped_token.payload
         except Exception as e:
             return {}
 

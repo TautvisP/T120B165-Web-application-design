@@ -1,0 +1,22 @@
+.header {
+    /* background: linear-gradient(45deg, #007BFF, #06396e); */
+    background-image: url('../media/banner.webp');
+    background-size: cover; /* Ensures the image covers the entire header */
+    background-position: center; /* Centers the image */
+    color: white;
+    padding: 30px 20px;
+    text-align: center;
+    border-bottom: 3px solid #222;
+  }
+  
+  .header h1 {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    font-size: 2.5rem;
+  }
+  
+  .header p {
+    margin: 10px 0 0;
+    font-size: 1.2rem;
+  }
+  
