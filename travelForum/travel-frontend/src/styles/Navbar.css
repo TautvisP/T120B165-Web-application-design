@@ -121,7 +121,6 @@
   cursor: pointer;
 }
 
-
 .close img {
   width: 30px;
   height: 30px;
@@ -151,4 +150,23 @@
 .button-container {
   display: flex;
   justify-content: center;
+}
+
+.nav-button {
+  background-color: #003566;
+  color: white;
+  padding: 10px 20px;
+  margin: 0 5px;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+}
+
+.nav-button:hover {
+  background-color: #001d3d;
+}
+
+.textas {
+  color:black;
 }

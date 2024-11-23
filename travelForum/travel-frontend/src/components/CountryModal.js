@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/PostModal.css';
-import closeSymbol from '../media/close_symbol.svg'; // Import the SVG file
+import closeSymbol from '../media/close_symbol.svg';
 
 const refreshToken = async () => {
   try {
@@ -16,40 +16,38 @@ const refreshToken = async () => {
   }
 };
 
-function PostModal({ closeModal, countryId, onPostCreated }) {
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
+function CountryModal({ closeModal, onCountryCreated }) {
+  const [name, setName] = useState('');
+  const [description, setDescription] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/countries/${countryId}/posts/`, {
-        title,
-        content,
-        author: localStorage.getItem('username'), // Replace with the actual current user
-        country: countryId,
+      const response = await axios.post('http://127.0.0.1:8000/api/countries/', {
+        name,
+        description,
       }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
-      setSuccess('Post created successfully!');
-      setTitle('');
-      setContent('');
-      onPostCreated(response.data); // Notify parent component about the new post
-      closeModal(); // Close the modal after successful submission
+      setSuccess('Country created successfully!');
+      setName('');
+      setDescription('');
+      onCountryCreated(response.data);
+      closeModal();
     } catch (err) {
       if (err.response && err.response.status === 401) {
         const newAccessToken = await refreshToken();
         if (newAccessToken) {
-          handleSubmit(e); // Retry the request with the new token
+          handleSubmit(e);
         } else {
-          setError('You must be logged in to create a post.');
+          setError('You must be logged in to create a country.');
         }
       } else {
-        setError('Failed to create post');
+        setError('Failed to create country');
       }
     }
   };
@@ -60,23 +58,27 @@ function PostModal({ closeModal, countryId, onPostCreated }) {
         <button className="close-modal" onClick={closeModal}>
           <img src={closeSymbol} alt="Close" />
         </button>
-        <h2>Create New Post</h2>
+        <h2>Create New Country</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          ></textarea>
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Country Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
           <div className="button-container">
-            <button className="submitButton" type="submit">Post</button>
+            <button className="submitButton" type="submit">Submit</button>
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -86,4 +88,4 @@ function PostModal({ closeModal, countryId, onPostCreated }) {
   );
 }
 
-export default PostModal;
+export default CountryModal;

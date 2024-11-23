@@ -1,10 +1,11 @@
 .country-page {
     padding: 20px;
     text-align: center;
+    position: relative;
   }
   
   .back-button {
-    background-color: #007BFF;
+    background-color: #003566;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -12,14 +13,17 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 35px;
+    left: 20px;
   }
   
   .back-button:hover {
-    background-color: #0056b3;
+    background-color: #001d3d;
   }
   
   .add-post {
-    background-color: #28A745;
+    background-color: #003566;
     color: white;
     border: none;
     padding: 10px 20px;
@@ -27,10 +31,13 @@
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s ease;
+    position: fixed;
+    bottom: 35px;
+    right: 20px;
   }
   
   .add-post:hover {
-    background-color: #1e7e34;
+    background-color: #001d3d;
   }
   
   h2 {

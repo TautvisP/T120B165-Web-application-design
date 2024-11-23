@@ -48,7 +48,7 @@ const Register = ({ openLoginDialog }) => {
                     <button className="submitButton" type="submit">Register</button>
                 </div>
             </form>
-            <p>Already have an account? <button onClick={openLoginDialog} className="link-button">Log in</button></p>
+            <p className="textas">Already have an account? <button onClick={openLoginDialog} className="link-button">Log in</button></p>
         </div>
     );
 };

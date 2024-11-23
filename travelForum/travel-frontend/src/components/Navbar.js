@@ -1,15 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Navbar.css';
-import { FiMenu, FiX } from 'react-icons/fi';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { FiMenu, FiX, FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import closeSymbol from '../media/close_symbol.svg'; // Import the SVG file
+import closeSymbol from '../media/close_symbol.svg';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoginOpen, setIsLoginOpen] = useState(false);
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('access_token');
+    if (token) {
+      setIsLoggedIn(true);
+    }
+  }, []);
 
   const openRegisterDialog = () => {
     setIsLoginOpen(false);
@@ -21,18 +29,42 @@ function Navbar() {
     setIsLoginOpen(true);
   };
 
+  const handleLoginSuccess = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    localStorage.removeItem('refresh_token');
+    setIsLoggedIn(false);
+  };
+
   return (
-    <Router>
-      <nav className="navbar">
-        <div className="nav-logo">Travel Forum</div>
-        <button className="nav-toggle" onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? <FiX /> : <FiMenu />}
-        </button>
-        <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
-          <li><button className="nav-button" onClick={() => setIsLoginOpen(true)}>Login</button></li>
-          <li><button className="nav-button" onClick={() => setIsRegisterOpen(true)}>Register</button></li>
-        </ul>
-      </nav>
+    <nav className="navbar">
+      <div className="nav-logo">Travel Forum</div>
+      <button className="nav-toggle" onClick={() => setIsOpen(!isOpen)}>
+        {isOpen ? <FiX /> : <FiMenu />}
+      </button>
+      <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+        {!isLoggedIn && (
+          <>
+            <li><button className="nav-button" onClick={() => setIsLoginOpen(true)}>Login</button></li>
+            <li><button className="nav-button" onClick={() => setIsRegisterOpen(true)}>Register</button></li>
+          </>
+        )}
+        {isLoggedIn && (
+          <>
+            <li>
+              <Link to="/profile" className="nav-button">
+                <FiUser />
+              </Link>
+            </li>
+            <li>
+              <button className="nav-button" onClick={handleLogout}>Logout</button>
+            </li>
+          </>
+        )}
+      </ul>
 
       {isLoginOpen && (
         <div className="modal">
@@ -40,7 +72,7 @@ function Navbar() {
             <button className="close-modal" onClick={() => setIsLoginOpen(false)}>
               <img src={closeSymbol} alt="Close" />
             </button>
-            <Login openRegisterDialog={openRegisterDialog} />
+            <Login openRegisterDialog={openRegisterDialog} closeModal={() => setIsLoginOpen(false)} onLoginSuccess={handleLoginSuccess} />
           </div>
         </div>
       )}
@@ -55,7 +87,7 @@ function Navbar() {
           </div>
         </div>
       )}
-    </Router>
+    </nav>
   );
 }
 

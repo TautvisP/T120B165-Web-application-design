@@ -1,0 +1,54 @@
+.profile-edit {
+  padding: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.profile-edit h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-edit .form-group {
+  margin-bottom: 15px;
+}
+
+.profile-edit input {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+.save-button {
+  width: 100%;
+  padding: 10px;
+  background-color: #003566;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.save-button:hover {
+  background-color: #001d3d;
+}
+
+.profile-back-button {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  left: 20px;
+}
+
+.profile-back-button:hover {
+  background-color: #001d3d;
+}

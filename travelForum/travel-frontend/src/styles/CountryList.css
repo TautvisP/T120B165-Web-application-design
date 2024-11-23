@@ -1,6 +1,52 @@
-.country-list .grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-  }
-  
+.country-list {
+  padding: 20px;
+  text-align: center;
+}
+
+.add-country {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  right: 20px;
+}
+
+.add-country:hover {
+  background-color: #001d3d;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.country-card {
+  border: 1px solid #ddd;
+  padding: 15px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.country-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.country-card h3 {
+  margin: 0;
+  color: #007BFF;
+}
+
+.country-card p {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333;
+}

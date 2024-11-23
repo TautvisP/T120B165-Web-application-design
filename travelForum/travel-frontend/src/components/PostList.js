@@ -1,18 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../styles/PostList.css';
 
-const posts = [
-  { title: 'Best Beaches in France', content: 'Check out these amazing beaches in the south of France...' },
-  { title: 'Top Sushi Spots in Japan', content: 'A guide to the best sushi restaurants in Tokyo.' }
-];
-
-function PostList() {
+function PostList({ posts }) {
   return (
     <div className="post-list">
-      {posts.map((post, index) => (
-        <div key={index} className="post-card">
+      {posts.map((post) => (
+        <div key={post.id} className="post-card">
           <h3>{post.title}</h3>
           <p>{post.content}</p>
+          <Link to={`/posts/${post.id}/comments`} className="view-comments-button">View Comments</Link>
         </div>
       ))}
     </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = ({ openRegisterDialog }) => {
+const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
@@ -19,6 +19,8 @@ const Login = ({ openRegisterDialog }) => {
             localStorage.setItem('refresh_token', response.data.refresh);
 
             setMessage(response.data.message);
+            onLoginSuccess(); // Notify parent component about successful login
+            closeModal(); // Close the modal
         } catch (error) {
             if (error.response) {
                 setMessage('Login failed. Please check your credentials.');
@@ -54,7 +56,7 @@ const Login = ({ openRegisterDialog }) => {
                     <button className="submitButton" type="submit">Log in</button>
                 </div>
             </form>
-            <p>Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
+            <p className="textas">Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
             {message && <p>{message}</p>}
         </div>
     );
