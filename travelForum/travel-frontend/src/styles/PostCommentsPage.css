@@ -1,0 +1,40 @@
+.post-comments-page {
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.back-button {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  left: 20px;
+}
+
+.back-button:hover {
+  background-color: #001d3d;
+}
+
+.add-comment {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  right: 20px;
+}
+
+.add-comment:hover {
+  background-color: #001d3d;
+}

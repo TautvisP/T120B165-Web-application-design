@@ -1,29 +1,43 @@
-// src/App.js
-import React from 'react';
+import React, { useState } from 'react';
+import Header from './components/Header';
+import Footer from './components/Footer';
+import CountryList from './components/CountryList';
+import CountryPage from './components/CountryPage';
+import Navbar from './components/Navbar';
+import ProfileEdit from './components/ProfileEdit';
+import PostCommentsPage from './components/PostCommentsPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Login from './components/Login';
-import Register from './components/Register';
+import './styles/App.css';
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route path="/register" element={<Register />} />
-                <Route path="/" element={<Home />} />
-            </Routes>
-        </Router>
-    );
-}
+  const [selectedCountry, setSelectedCountry] = useState(null);
 
-// Create a separate Home component
-const Home = () => (
-    <div>
-        <h1>Welcome to Travel Forum</h1>
-        <h2>
-            <a href="/login">Login</a> | <a href="/register">Register</a>
-        </h2>
-    </div>
-);
+  const handleCountryClick = (country) => {
+    setSelectedCountry(country);
+  };
+
+  return (
+    <Router>
+      <div className="App">
+        <Navbar />
+        <Header />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={
+              selectedCountry ? (
+                <CountryPage country={selectedCountry} goBack={() => setSelectedCountry(null)} />
+              ) : (
+                <CountryList onCountryClick={handleCountryClick} />
+              )
+            } />
+            <Route path="/profile" element={<ProfileEdit />} />
+            <Route path="/posts/:postId/comments" element={<PostCommentsPage />} />
+          </Routes>
+        </div>
+        <Footer />
+      </div>
+    </Router>
+  );
+}
 
 export default App;
