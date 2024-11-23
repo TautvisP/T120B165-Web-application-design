@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import '../styles/PostModal.css';
-import closeSymbol from '../media/close_symbol.svg'; // Import the SVG file
+import closeSymbol from '../media/close_symbol.svg';
 
 const refreshToken = async () => {
   try {
@@ -28,7 +28,7 @@ function PostModal({ closeModal, countryId, onPostCreated }) {
       const response = await axios.post(`http://127.0.0.1:8000/api/countries/${countryId}/posts/`, {
         title,
         content,
-        author: localStorage.getItem('username'), // Replace with the actual current user
+        author: localStorage.getItem('username'),
         country: countryId,
       }, {
         headers: {
@@ -38,13 +38,13 @@ function PostModal({ closeModal, countryId, onPostCreated }) {
       setSuccess('Post created successfully!');
       setTitle('');
       setContent('');
-      onPostCreated(response.data); // Notify parent component about the new post
-      closeModal(); // Close the modal after successful submission
+      onPostCreated(response.data);
+      closeModal();
     } catch (err) {
       if (err.response && err.response.status === 401) {
         const newAccessToken = await refreshToken();
         if (newAccessToken) {
-          handleSubmit(e); // Retry the request with the new token
+          handleSubmit(e);
         } else {
           setError('You must be logged in to create a post.');
         }

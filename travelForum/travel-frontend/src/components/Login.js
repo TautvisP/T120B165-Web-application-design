@@ -19,8 +19,8 @@ const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
             localStorage.setItem('refresh_token', response.data.refresh);
 
             setMessage(response.data.message);
-            onLoginSuccess(); // Notify parent component about successful login
-            closeModal(); // Close the modal
+            onLoginSuccess();
+            closeModal();
         } catch (error) {
             if (error.response) {
                 setMessage('Login failed. Please check your credentials.');
@@ -57,7 +57,7 @@ const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
                 </div>
             </form>
             <p className="textas">Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
-            {message && <p>{message}</p>}
+            {message && <p className="message">{message}</p>}
         </div>
     );
 };

@@ -52,3 +52,19 @@
 .profile-back-button:hover {
   background-color: #001d3d;
 }
+
+@media (max-width: 768px) {
+  .profile-edit {
+    padding: 10px;
+  }
+
+  .profile-edit input {
+    padding: 8px;
+    font-size: 12px;
+  }
+
+  .save-button, .back-button {
+    padding: 8px;
+    font-size: 12px;
+  }
+}
