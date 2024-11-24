@@ -57,7 +57,7 @@ const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
                     <button className="submitButton" type="submit">Log in</button>
                 </div>
             </form>
-            <p>Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
+            <p className="textas">Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
             {message && <p className="message">{message}</p>}
         </div>
     );
