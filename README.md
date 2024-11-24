@@ -58,8 +58,45 @@
 •	HTML5/CSS3 ir Bootstrap naudojami formuojant prisitaikančią ir patogią grafinę naudotojo sąsają. Šios technologijos leidžia sukurti modernią, patrauklią ir mobiliesiems pritaikytą sąsają, užtikrinančią gerą vartotojų patirtį.
 
 ## Paleidimas
-Windows:
-python venv\Scripts\Activate.ps1 
-Unix: python venv\Scripts\activate
+Windows: `venv\Scripts\activate`
+Unix: `source venv\bin\activate`
 
-python manage.py runserver
+naudoti `python manage.py runserver` backend'ui
+naudoti `npm start` frontend'ui
+
+## 4. Naudotojo sąsajos projektas (wireframe)
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/09b7cde9-96d8-4722-8ba5-6c883639bab3" alt="Image 1" width="500" height="400"></td>
+    <td><img src="https://github.com/user-attachments/assets/6106c35e-0bf6-454c-8dda-f864403fae49" alt="Image 2" width="500" height="400"></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/5bb45d82-84be-44a9-8921-047eb31ff5ba" alt="Image 3" width="500" height="400"></td>
+    <td><img src="https://github.com/user-attachments/assets/53bf7cdd-4c34-4d09-a45c-cfd2383e2578" alt="Image 4" width="500" height="400"></td>
+  </tr>
+</table>
+
+
+## 5. Sistemos dizainas
+### Sistemos langai
+![image](https://github.com/user-attachments/assets/179efcfa-85d3-4d78-9190-fe6e1fbbd441)
+![image](https://github.com/user-attachments/assets/12677336-bb4e-40f2-934b-83c5ec437b94)
+![image](https://github.com/user-attachments/assets/5c354c11-26c2-44e0-807d-72456a4055cd)
+![image](https://github.com/user-attachments/assets/ed0c694c-777d-41fa-a5f1-7b4ae4e7f4ff)
+
+
+### Modaliniai langai
+Jų yra ir daugiau, tačiau visi atrodo panašiai
+<table>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/e7152a5f-a6da-400d-b92d-888ca6f49f2e"></td>
+    <td><img src="https://github.com/user-attachments/assets/610a0b71-3909-430d-af83-61bc3c10183a"></td>
+  </tr>
+  <tr>
+    <td><img src="https://github.com/user-attachments/assets/dbdaef1d-4a0a-4f48-b9d1-6bbcca8f6ba7"></td>
+    <td><img src="https://github.com/user-attachments/assets/3f5a3898-dd42-41b3-89be-a53bbeccf109"></td>
+  </tr>
+</table>
+
+
+
