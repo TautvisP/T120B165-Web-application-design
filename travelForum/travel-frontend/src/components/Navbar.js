@@ -31,12 +31,16 @@ function Navbar() {
 
   const handleLoginSuccess = () => {
     setIsLoggedIn(true);
+    window.location.reload(); // Refresh the page after logging in
   };
 
   const handleLogout = () => {
     localStorage.removeItem('access_token');
     localStorage.removeItem('refresh_token');
+    localStorage.removeItem('username');
     setIsLoggedIn(false);
+    setIsOpen(false);
+    window.location.reload(); // Refresh the page after logging out
   };
 
   return (

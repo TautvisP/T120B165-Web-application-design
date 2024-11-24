@@ -1,29 +1,34 @@
 from rest_framework import serializers
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
-from rest_framework import serializers
 from django.contrib.auth.models import User
 
 class CountrySerializer(serializers.ModelSerializer):
+    creator = serializers.ReadOnlyField(source='creator.username')
+
     class Meta:
         model = Country
         fields = '__all__'
 
 class PostSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Post
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
+    author = serializers.ReadOnlyField(source='author.username')
+
     class Meta:
         model = Comment
         fields = '__all__'
+
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
     @classmethod
     def get_token(cls, user):
         token = super().get_token(user)
-
         token['username'] = user.username
         user_profile = user.userprofile
         token['role'] = user_profile.role

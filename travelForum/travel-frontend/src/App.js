@@ -16,6 +16,14 @@ function App() {
     setSelectedCountry(country);
   };
 
+  const handleCountryDeleted = (countryId) => {
+    setSelectedCountry(null);
+  };
+
+  const handleCountryUpdated = (updatedCountry) => {
+    setSelectedCountry(updatedCountry);
+  };
+
   return (
     <Router>
       <div className="App">
@@ -25,7 +33,12 @@ function App() {
           <Routes>
             <Route path="/" element={
               selectedCountry ? (
-                <CountryPage country={selectedCountry} goBack={() => setSelectedCountry(null)} />
+                <CountryPage 
+                  country={selectedCountry} 
+                  goBack={() => setSelectedCountry(null)} 
+                  onCountryDeleted={handleCountryDeleted} 
+                  onCountryUpdated={handleCountryUpdated} 
+                />
               ) : (
                 <CountryList onCountryClick={handleCountryClick} />
               )

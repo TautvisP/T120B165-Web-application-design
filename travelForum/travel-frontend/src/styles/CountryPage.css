@@ -1,47 +1,57 @@
 .country-page {
-    padding: 20px;
-    text-align: center;
-    position: relative;
-  }
-  
-  .back-button {
-    background-color: #003566;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin-bottom: 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    position: fixed;
-    bottom: 35px;
-    left: 20px;
-  }
-  
-  .back-button:hover {
-    background-color: #001d3d;
-  }
-  
-  .add-post {
-    background-color: #003566;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    margin: 20px 0;
-    cursor: pointer;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-    position: fixed;
-    bottom: 35px;
-    right: 20px;
-  }
-  
-  .add-post:hover {
-    background-color: #001d3d;
-  }
-  
-  h2 {
-    color: #333;
-    margin-bottom: 20px;
-  }
-  
+  padding: 20px;
+  text-align: center;
+  position: relative;
+}
+
+.back-button {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  left: 20px;
+}
+
+.back-button:hover {
+  background-color: #001d3d;
+}
+
+.add-post {
+  background-color: #003566;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 20px 0;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  position: fixed;
+  bottom: 35px;
+  right: 20px;
+}
+
+.add-post:hover {
+  background-color: #001d3d;
+}
+
+.edit-button, .delete-button {
+  background-color: #ffc300;
+  color: #000814;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button:hover, .delete-button:hover {
+  background-color: #ffb300;
+}

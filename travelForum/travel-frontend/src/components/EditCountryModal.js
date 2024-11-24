@@ -16,53 +16,45 @@ const refreshToken = async () => {
   }
 };
 
-function PostModal({ closeModal, countryId, post, onPostCreated, onPostUpdated }) {
-  const [title, setTitle] = useState(post ? post.title : '');
-  const [content, setContent] = useState(post ? post.content : '');
+function EditCountryModal({ closeModal, country, onCountryUpdated }) {
+  const [name, setName] = useState(country.name);
+  const [description, setDescription] = useState(country.description);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   useEffect(() => {
-    if (post) {
-      setTitle(post.title);
-      setContent(post.content);
+    if (country) {
+      setName(country.name);
+      setDescription(country.description);
     }
-  }, [post]);
+  }, [country]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = post
-        ? `http://127.0.0.1:8000/api/posts/${post.id}/`
-        : `http://127.0.0.1:8000/api/countries/${countryId}/posts/`;
-      const method = post ? 'put' : 'post';
-      const response = await axios[method](url, {
-        title,
-        content,
+      const url = `http://127.0.0.1:8000/api/countries/${country.id}/`;
+      const response = await axios.put(url, {
+        name,
+        description,
       }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
-      setSuccess(post ? 'Post updated successfully!' : 'Post created successfully!');
-      setTitle('');
-      setContent('');
-      if (post) {
-        onPostUpdated(response.data);
-      } else {
-        onPostCreated(response.data);
-      }
+      setSuccess('Country updated successfully!');
+      onCountryUpdated(response.data);
       closeModal();
     } catch (err) {
+      console.error('Error:', err);
       if (err.response && err.response.status === 401) {
         const newAccessToken = await refreshToken();
         if (newAccessToken) {
           handleSubmit(e);
         } else {
-          setError('You must be logged in to create or edit a post.');
+          setError('You must be logged in to edit a country.');
         }
       } else {
-        setError('Failed to create or edit post');
+        setError('Failed to edit country');
       }
     }
   };
@@ -73,23 +65,27 @@ function PostModal({ closeModal, countryId, post, onPostCreated, onPostUpdated }
         <button className="close-modal" onClick={closeModal}>
           <img src={closeSymbol} alt="Close" />
         </button>
-        <h2>{post ? 'Edit Post' : 'Create New Post'}</h2>
+        <h2>Edit Country</h2>
         <form onSubmit={handleSubmit}>
-          <input
-            type="text"
-            placeholder="Title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-          <textarea
-            placeholder="Content"
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-            required
-          ></textarea>
+          <div className="form-group">
+            <input
+              type="text"
+              placeholder="Country Name"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <textarea
+              placeholder="Description"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              required
+            ></textarea>
+          </div>
           <div className="button-container">
-            <button className="submitButton" type="submit">{post ? 'Update' : 'Post'}</button>
+            <button className="submitButton" type="submit">Update</button>
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -99,4 +95,4 @@ function PostModal({ closeModal, countryId, post, onPostCreated, onPostUpdated }
   );
 }
 
-export default PostModal;
+export default EditCountryModal;

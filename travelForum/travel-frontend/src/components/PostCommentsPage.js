@@ -28,6 +28,14 @@ function PostCommentsPage() {
     setComments((prevComments) => [...prevComments, newComment]);
   };
 
+  const handleCommentUpdated = (updatedComment) => {
+    setComments((prevComments) => prevComments.map(comment => comment.id === updatedComment.id ? updatedComment : comment));
+  };
+
+  const handleCommentDeleted = (commentId) => {
+    setComments((prevComments) => prevComments.filter(comment => comment.id !== commentId));
+  };
+
   return (
     <div className="post-comments-page">
       <button className="back-button" onClick={() => navigate(-1)}>← Back</button>
@@ -36,7 +44,7 @@ function PostCommentsPage() {
       {comments.length === 0 ? (
         <p>No comments found, log in and create one to start a conversation!</p>
       ) : (
-        <CommentList comments={comments} />
+        <CommentList comments={comments} onCommentUpdated={handleCommentUpdated} onCommentDeleted={handleCommentDeleted} />
       )}
       {isModalOpen && (
         <CommentModal

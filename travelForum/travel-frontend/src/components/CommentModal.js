@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/PostModal.css';
 import closeSymbol from '../media/close_symbol.svg';
@@ -16,37 +16,53 @@ const refreshToken = async () => {
   }
 };
 
-function CommentModal({ closeModal, postId, onCommentCreated }) {
-  const [text, setText] = useState('');
+function CommentModal({ closeModal, postId, comment, onCommentCreated, onCommentUpdated }) {
+  const [text, setText] = useState(comment ? comment.text : '');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
+  useEffect(() => {
+    if (comment) {
+      setText(comment.text);
+    }
+  }, [comment]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log('Submitting comment:', { text });
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/api/posts/${postId}/comments/`, {
+      const url = comment
+        ? `http://127.0.0.1:8000/api/comments/${comment.id}/`
+        : `http://127.0.0.1:8000/api/posts/${postId}/comments/`;
+      const method = comment ? 'put' : 'post';
+      console.log(`Making ${method.toUpperCase()} request to ${url}`);
+      const response = await axios[method](url, {
         text,
-        author: localStorage.getItem('username'),
-        post: postId,
       }, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`
         }
       });
-      setSuccess('Comment posted successfully!');
+      console.log('Response:', response.data);
+      setSuccess(comment ? 'Comment updated successfully!' : 'Comment posted successfully!');
       setText('');
-      onCommentCreated(response.data);
+      if (comment) {
+        onCommentUpdated(response.data);
+      } else {
+        onCommentCreated(response.data);
+      }
       closeModal();
     } catch (err) {
+      console.error('Error:', err);
       if (err.response && err.response.status === 401) {
         const newAccessToken = await refreshToken();
         if (newAccessToken) {
           handleSubmit(e);
         } else {
-          setError('You must be logged in to post a comment.');
+          setError('You must be logged in to create or edit a comment.');
         }
       } else {
-        setError('Failed to post comment');
+        setError('Failed to create or edit comment');
       }
     }
   };
@@ -57,7 +73,7 @@ function CommentModal({ closeModal, postId, onCommentCreated }) {
         <button className="close-modal" onClick={closeModal}>
           <img src={closeSymbol} alt="Close" />
         </button>
-        <h2>Post a Comment</h2>
+        <h2>{comment ? 'Edit Comment' : 'Post a Comment'}</h2>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
             <textarea
@@ -68,7 +84,7 @@ function CommentModal({ closeModal, postId, onCommentCreated }) {
             ></textarea>
           </div>
           <div className="button-container">
-            <button className="submitButton" type="submit">Submit</button>
+            <button className="submitButton" type="submit">{comment ? 'Update' : 'Submit'}</button>
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}

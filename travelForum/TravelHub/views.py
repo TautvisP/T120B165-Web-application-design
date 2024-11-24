@@ -23,6 +23,21 @@ class CountryViewSet(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
 
+    def perform_create(self, serializer):
+        serializer.save(creator=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        country = self.get_object()
+        if country.creator != request.user:
+            return Response({'error': 'You do not have permission to edit this country.'}, status=status.HTTP_403_FORBIDDEN)
+        return super().update(request, *args, **kwargs)
+
+    def destroy(self, request, *args, **kwargs):
+        country = self.get_object()
+        if country.creator != request.user:
+            return Response({'error': 'You do not have permission to delete this country.'}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
+
     @action(detail=True, methods=['get', 'post'])
     def posts(self, request, pk=None):
         country = self.get_object()
@@ -31,10 +46,9 @@ class CountryViewSet(viewsets.ModelViewSet):
                 return Response({"error": "You must be logged in to create a post."}, status=401)
             data = request.data.copy()
             data['country'] = country.id
-            data['author'] = request.user.username
             serializer = PostSerializer(data=data)
             if serializer.is_valid():
-                serializer.save(country=country)
+                serializer.save(author=request.user, country=country)
                 return Response(serializer.data, status=201)
             return Response(serializer.errors, status=400)
         posts = country.posts.all()
@@ -61,6 +75,25 @@ class PostViewSet(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        post = self.get_object()
+        if post.author != request.user:
+            return Response({'error': 'You do not have permission to edit this post.'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = PostSerializer(post, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        post = self.get_object()
+        if post.author != request.user:
+            return Response({'error': 'You do not have permission to delete this post.'}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
+
     @action(detail=True, methods=['get', 'post'])
     def comments(self, request, pk=None):
         post = self.get_object()
@@ -69,10 +102,9 @@ class PostViewSet(viewsets.ModelViewSet):
                 return Response({"error": "You must be logged in to post a comment."}, status=401)
             data = request.data.copy()
             data['post'] = post.id
-            data['author'] = request.user.username
             serializer = CommentSerializer(data=data)
             if serializer.is_valid():
-                serializer.save(post=post)
+                serializer.save(author=request.user, post=post)
                 return Response(serializer.data, status=201)
             return Response(serializer.errors, status=400)
         comments = post.comments.all()
@@ -88,6 +120,24 @@ class CommentViewSet(viewsets.ModelViewSet):
             return [AllowAny()]
         return [IsAuthenticated()]
 
+    def perform_create(self, serializer):
+        serializer.save(author=self.request.user)
+
+    def update(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.author != request.user:
+            return Response({'error': 'You do not have permission to edit this comment.'}, status=status.HTTP_403_FORBIDDEN)
+        serializer = CommentSerializer(comment, data=request.data, partial=True)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        comment = self.get_object()
+        if comment.author != request.user:
+            return Response({'error': 'You do not have permission to delete this comment.'}, status=status.HTTP_403_FORBIDDEN)
+        return super().destroy(request, *args, **kwargs)
 
 class CustomTokenObtainPairView(TokenObtainPairView):
     serializer_class = CustomTokenObtainPairSerializer

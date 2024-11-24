@@ -17,6 +17,7 @@ const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
 
             localStorage.setItem('access_token', response.data.access);
             localStorage.setItem('refresh_token', response.data.refresh);
+            localStorage.setItem('username', username); // Store the username
 
             setMessage(response.data.message);
             onLoginSuccess();
@@ -56,7 +57,7 @@ const Login = ({ openRegisterDialog, closeModal, onLoginSuccess }) => {
                     <button className="submitButton" type="submit">Log in</button>
                 </div>
             </form>
-            <p className="textas">Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
+            <p>Don't have an account? <button onClick={openRegisterDialog} className="link-button">Register</button></p>
             {message && <p className="message">{message}</p>}
         </div>
     );
