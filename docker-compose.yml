@@ -45,7 +45,7 @@ services:
       - ./travelForum/staticfiles:/app/staticfiles
       - ./travelForum/travel-frontend/build:/usr/share/nginx/html
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - backend
       - frontend
