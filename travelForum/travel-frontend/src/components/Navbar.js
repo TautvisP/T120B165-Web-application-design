@@ -4,7 +4,7 @@ import { FiMenu, FiX, FiUser } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
-import closeSymbol from '../media/close_symbol.svg';
+import closeSymbol from '../photos/close_symbol.svg';
 
 function Navbar() {
   const [isOpen, setIsOpen] = useState(false);

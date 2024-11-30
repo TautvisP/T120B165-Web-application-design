@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/PostModal.css';
-import closeSymbol from '../media/close_symbol.svg';
+import closeSymbol from '../photos/close_symbol.svg';
 
 const refreshToken = async () => {
   try {

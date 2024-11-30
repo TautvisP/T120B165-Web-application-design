@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/CommentList.css';
-import userSymbol from '../media/profile-circle.svg';
+import userSymbol from '../photos/profile-circle.svg';
 import CommentModal from './CommentModal';
 import axios from 'axios';
 
