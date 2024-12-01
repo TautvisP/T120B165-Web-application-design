@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-yh9-n^$m%!sd#kh+f#y=cl3-%@e_2b0alq$i0h2q4#cun-utqh
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 
@@ -121,6 +121,27 @@ DATABASES = {
         'HOST': 'db',
         'PORT': '3306',
     }
+}
+
+# Logging configuration
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'DEBUG',
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+        },
+    },
 }
 
 

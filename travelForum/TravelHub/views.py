@@ -11,6 +11,9 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import UntypedToken
 from rest_framework.permissions import IsAuthenticated, AllowAny
 
+import logging
+logger = logging.getLogger(__name__)
+
 def home(request):
     return HttpResponse("Sveiki atvykę į mano Django svetainę!")
 
@@ -164,15 +167,23 @@ class CustomTokenObtainPairView(TokenObtainPairView):
             return {}
 
 
+
 class RegisterView(APIView):
     def post(self, request):
         username = request.data.get('username')
         password = request.data.get('password')
+
+        logger.info('Received registration request for username: %s', username)
+        
         if username and password:
             user = User(username=username)
             user.set_password(password)
             user.save()
+
+            logger.info('User registered successfully: %s', username)
             return Response({'msg': 'User registered successfully'}, status=status.HTTP_201_CREATED)
+        
+        logger.warning('Invalid input for registration')
         return Response({'msg': 'Invalid input'}, status=status.HTTP_400_BAD_REQUEST)
     
 class ProfileViewSet(viewsets.ViewSet):
