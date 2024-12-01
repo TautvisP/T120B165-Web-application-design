@@ -100,3 +100,59 @@ Jų yra ir daugiau, tačiau visi atrodo panašiai
 
 
 
+## 6. UML "Deployment" Diagrama
+„Nginx“ labai efektyviai pateikia statinius failus (pvz., CSS, ‚JavaScript‘, paveikslėlius) tiesiogiai klientams, kešuoja statinius failus, taip sumažina „backend“ serverio apkrovą ir krovimo laiką klientams. „Nginx“ prideda ir papildomą saugumo lygi, filtruoja ir blokuoja „DDoS“, SQL injekcijos ir kitas atakas. MySQL bendrauja su „backend“ serverio dalimi atliekant CRUD operacijas. „Backend“ su „Nginx“ bendrauja per „REST API“, o „React frontend“ su „Nginx“ bendrauja per HTTP užklausas. Statinius failus „Nginx“ pateikia „React frontend“. 
+![image](https://github.com/user-attachments/assets/b678c455-2961-474a-bea6-c19c5530120d)
+
+## 7. „OpenAPI" specifikacija
+[TravelForumOpenapi.txt](https://github.com/user-attachments/files/17969905/TravelForum.OpenApi.txt)
+
+```plaintext
+openapi: 3.0.3
+info:
+  title: Travel Forum API
+  version: 1.0.0
+  description: This API allows users to interact with countries, posts, and comments
+    in the travel forum.
+paths:
+  /api/comments/:
+    get:
+      operationId: comments_list
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+```
+## 8. Išvada
+Šis projektas apima „Django“ backend ir „React“ frontend programos kurimą ir diegimą naudojant „Docker“ ir „DigitalOcean“. 
+
+### Pagrindiniai komponentai
+
+### „Django Backend":
+Naudojama „Django REST API“ sistema ir paprastas JWT autentifikavimas.
+Duomenų saugojimui jungiasi prie MySQL duomenų bazės.
+
+### „React Frontend":
+Sukuriama taikomosios programos naudotojo sąsaja.
+Su „Django“ galine dalimi bendrauja per „Nginx" sąsają.
+
+### „Nginx":
+Aptarnauja „React Frontend“ su statiniiai failai.
+Veikia kaip atvirkštinis tarpininkas (angl. reverse proxy), perduodantis API užklausas į „Django backend“.
+
+### „Docker":
+Konteineriuose talpinami taikomosios programos komponentai (backend, frontend, duomenų bazė ir „Nginx“).
+Užtikrina nuoseklumą skirtingose aplinkose.
+
+### DigitalOcean:
+Suteikia keičiamo dydžio (angl. scalable) debesijos infrastruktūrą talpinti programoms.
+Debesų kompiuterijos pardavėja, turinti duomenų centrų visame pasaulyje ir siūlanti infrastruktūros kaip paslaugos (IaaS) platformą programinės įrangos kūrėjams. Didžiausias privalumas - programų diegimo paprastumas.
