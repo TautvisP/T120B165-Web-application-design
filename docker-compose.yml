@@ -6,9 +6,9 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
     environment:
-      MYSQL_DATABASE: ${DB_NAME}
-      MYSQL_USER: ${DB_USER}
-      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: db
+      MYSQL_USER: traveler
+      MYSQL_PASSWORD: traveler
       MYSQL_ROOT_PASSWORD: rootpassword
     ports:
       - "3306:3306"
@@ -20,6 +20,7 @@ services:
     command: gunicorn --bind 0.0.0.0:8000 travelForum.wsgi:application
     volumes:
       - ./travelForum:/app
+      - ./travelForum/staticfiles:/app/staticfiles
     ports:
       - "8000:8000"
     depends_on:
@@ -45,7 +46,7 @@ services:
       - ./travelForum/staticfiles:/app/staticfiles
       - ./travelForum/travel-frontend/build:/usr/share/nginx/html
     ports:
-      - "80:80"
+      - "8080:80"
     depends_on:
       - backend
       - frontend
