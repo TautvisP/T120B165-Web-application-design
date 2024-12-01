@@ -25,11 +25,11 @@ services:
     depends_on:
       - db
     environment:
-      - DB_HOST=${DB_HOST}
-      - DB_PORT=${DB_PORT}
-      - DB_NAME=${DB_NAME}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_NAME=travelhub_database
+      - DB_USER=traveler
+      - DB_PASSWORD=traveler
 
   frontend:
     build:
@@ -45,7 +45,7 @@ services:
       - ./travelForum/staticfiles:/app/staticfiles
       - ./travelForum/travel-frontend/build:/usr/share/nginx/html
     ports:
-      - "8080:80"
+      - "80:80"
     depends_on:
       - backend
       - frontend
