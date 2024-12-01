@@ -37,9 +37,6 @@
 
 •	Nariai gali redaguoti arba ištrinti tik savo sukurtą turinį.
 
-### Paieškos funkcija:
-•	Sistema turi paieškos funkciją, kuri leidžia vartotojams ieškoti patarimų pagal šalį, miestą, kategoriją ar specifinius raktinius žodžius.
-
 ## 3. Pasirinktų technologijų aprašymas
 ### Backend:
 
@@ -55,7 +52,7 @@
 
 •	React.js naudojamas kurti interaktyvią ir greitą naudotojo sąsają. React leidžia kurti dinaminius komponentus, kurie gali efektyviai reaguoti į vartotojo veiksmus ir užtikrina sklandų vartotojo patirtį.
 
-•	HTML5/CSS3 ir Bootstrap naudojami formuojant prisitaikančią ir patogią grafinę naudotojo sąsają. Šios technologijos leidžia sukurti modernią, patrauklią ir mobiliesiems pritaikytą sąsają, užtikrinančią gerą vartotojų patirtį.
+•	HTML5/CSS3 naudojami formuojant prisitaikančią ir patogią grafinę naudotojo sąsają. Šios technologijos leidžia sukurti modernią, patrauklią sąsają, užtikrinančią gerą vartotojų patirtį.
 
 ## Paleidimas
 Windows: `venv\Scripts\activate`
@@ -63,6 +60,8 @@ Unix: `source venv\bin\activate`
 
 naudoti `python manage.py runserver` backend'ui
 naudoti `npm start` frontend'ui
+
+arba naudojant „Docker" užtenka esant `T120B165-Web-application-design` folderyje į konsolė parašyti `docker-compose up --build` ir už Jus bus pasirūpinta programos paleidimu ir įdiegimu.
 
 ## 4. Naudotojo sąsajos projektas (wireframe)
 <table>
@@ -105,6 +104,7 @@ Jų yra ir daugiau, tačiau visi atrodo panašiai
 ![image](https://github.com/user-attachments/assets/b678c455-2961-474a-bea6-c19c5530120d)
 
 ## 7. „OpenAPI" specifikacija
+Buvo realizuotos šalių, įrašų ir komentarų CRUD operacijos, vartotojų registracija, prisijungimas, profilio redagavimas, administratoriaus posistemė. Taip pat buvo realizuoti ir kelių lygių hierarchiniai ryšiai, kurie leidžia gražinti visus norimos šalies, norimo įrašo komentarus.
 [TravelForumOpenapi.txt](https://github.com/user-attachments/files/17969905/TravelForum.OpenApi.txt)
 
 ```plaintext
